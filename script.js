@@ -3,9 +3,18 @@ const form = document.querySelector('form')
 const inputPeso = document.querySelector('#peso')
 const inputAltura = document.querySelector('#altura')
 
-const modalWrapper = document.querySelector('.modal-wrapper')
-const modalMessage = document.querySelector('.modal .title span')
-const modalBtnClose = document.querySelector('.modal button.close')
+const Modal = { //estruturacao de dados modal com objeto literal
+  wrapper: document.querySelector('.modal-wrapper'),
+  message: document.querySelector('.modal .title span'),
+  buttonClose: document.querySelector('.modal button.close'),
+
+  open() {//funcao que vai ser executada quando chamada
+    Modal.wrapper.classList.add('open')
+  },
+  close() {
+    Modal.wrapper.classList.remove('open')
+  }
+}
 
 // 2 maneiras de criar e atribuir função a um evento
 // form.onsubmit = function() {}
@@ -18,12 +27,12 @@ form.onsubmit = (event) => { // funcao usada para que nao recarregue a pagina
   const result = IMC(peso, altura)
   const message = `Seu IMC é de ${result}`
 
-  modalMessage.innerText = message
-  modalWrapper.classList.add('open')
+  Modal.message.innerText = message
+  Modal.open()
 }
 
-modalBtnClose.onclick = () => { // funcao para fechar com botao X
-  modalWrapper.classList.remove('open')
+Modal.buttonClose.onclick = () => { // funcao para fechar com botao X
+  Modal.close()
 }
 
 function IMC(peso, altura) {
