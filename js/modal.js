@@ -14,3 +14,11 @@ export const Modal = { //estruturacao de dados modal com objeto literal
 Modal.buttonClose.onclick = () => { // funcao para fechar com botao X
   Modal.close()
 }
+
+window.addEventListener('keydown', handleKeydown)
+
+function handleKeydown(event) {
+  if (event.key === 'Escape') {
+    Modal.close()
+  }
+}

@@ -1,4 +1,6 @@
 import { Modal } from './modal.js'
+import { AlertError } from "./alert-error.js"
+import { IMC,  notNumber} from "./utils.js"
 
 // Variáveis
 const form = document.querySelector('form')
@@ -13,6 +15,15 @@ form.onsubmit = (event) => { // funcao usada para que nao recarregue a pagina
   const peso = inputPeso.value
   const altura = inputAltura.value
 
+  const showAlertError = notNumber(peso) || notNumber(altura)
+
+  if (showAlertError) {
+    AlertError.open()
+    return;
+  }
+
+  AlertError.close()
+
   const result = IMC(peso, altura)
   const message = `Seu IMC é de ${result}`
 
@@ -20,9 +31,6 @@ form.onsubmit = (event) => { // funcao usada para que nao recarregue a pagina
   Modal.open()
 }
 
-
-
-function IMC(peso, altura) {
-  return (peso / ((altura / 100) ** 2)).toFixed(2)
-}
-
+// evento para fecha o alerta de erro quando comecar a digitar no input
+inputPeso.oninput = () => AlertError.close()
+inputAltura.oninput = () => AlertError.close()
